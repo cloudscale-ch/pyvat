@@ -8,10 +8,10 @@ from .vat_charge import VatCharge, VatChargeAction
 from .vat_rules import VAT_RULES
 
 
-__version__ = '1.3.1'
+__version__ = '1.3.13'
 
 
-WHITESPACE_EXPRESSION = re.compile('[\s\-]+')
+WHITESPACE_EXPRESSION = re.compile(r'[\s\-]+')
 """Whitespace expression.
 
 Used for cleaning VAT numbers.
@@ -30,8 +30,6 @@ VAT_NUMBER_EXPRESSIONS = {
     'ES': re.compile(r'^[\da-z]\d{7}[\da-z]$', re.IGNORECASE),
     'FI': re.compile(r'^\d{8}$'),
     'FR': re.compile(r'^[\da-hj-np-z]{2}\d{9}$', re.IGNORECASE),
-    'GB': re.compile(r'^((\d{9})|(\d{12})|(GD\d{3})|(HA\d{3}))$',
-                     re.IGNORECASE),
     'GR': re.compile(r'^\d{9}$'),
     'HR': re.compile(r'^\d{11}$'),
     'HU': re.compile(r'^\d{8}$'),
@@ -42,7 +40,7 @@ VAT_NUMBER_EXPRESSIONS = {
     'LU': re.compile(r'^\d{8}$'),
     'LV': re.compile(r'^\d{11}$'),
     'MT': re.compile(r'^\d{8}$'),
-    'NL': re.compile(r'^\d{9}B\d{2,3}$', re.IGNORECASE),
+    'NL': re.compile(r'^\d{9}B\d{2}$', re.IGNORECASE),
     'PL': re.compile(r'^\d{10}$'),
     'PT': re.compile(r'^\d{9}$'),
     'RO': re.compile(r'^\d{2,10}$'),
@@ -78,7 +76,6 @@ VAT_REGISTRIES = {
     'ES': VIES_REGISTRY,
     'FI': VIES_REGISTRY,
     'FR': VIES_REGISTRY,
-    'GB': VIES_REGISTRY,
     'GR': VIES_REGISTRY,
     'HU': VIES_REGISTRY,
     'HR': VIES_REGISTRY,
@@ -112,7 +109,7 @@ def decompose_vat_number(vat_number, country_code=None):
         VAT number.
     :returns:
         a :class:`tuple` containing the VAT number and country code or
-        ``(None, None)`` if decomposition failed.
+        ``(vat_number, None)`` if decomposition failed.
     """
 
     # Clean the VAT number.
@@ -121,6 +118,11 @@ def decompose_vat_number(vat_number, country_code=None):
     # Attempt to determine the country code of the VAT number if possible.
     if not country_code:
         country_code = vat_number[0:2]
+
+        if any(c.isdigit() for c in country_code):
+            # Country code should not contain digits
+            return (vat_number, None)
+
         # Non-ISO code used for Greece.
         if country_code == 'EL':
             country_code = 'GR'
@@ -128,9 +130,10 @@ def decompose_vat_number(vat_number, country_code=None):
         if country_code not in VAT_REGISTRIES:
             try:
                 if not pycountry.countries.get(alpha_2=country_code):
-                    return (None, None)
+                    return (vat_number, None)
             except KeyError:
-                return (None, None)
+                # country code not found
+                return (vat_number, None)
         vat_number = vat_number[2:]
     elif vat_number[0:2] == country_code:
         vat_number = vat_number[2:]
@@ -152,20 +155,18 @@ def is_vat_number_format_valid(vat_number, country_code=None):
         detection.
     :returns:
         ``True`` if the format of the VAT number can be fully asserted as valid
-        or ``False`` if not, otherwise ``None`` indicating that the VAT number
-        format may or may not be valid.
+        or ``False`` if not.
     """
 
-    # Decompose the VAT number.
     vat_number, country_code = decompose_vat_number(vat_number, country_code)
+
     if not vat_number or not country_code:
         return False
-
-    # Test the VAT number against an expression if possible.
-    if country_code not in VAT_NUMBER_EXPRESSIONS:
-        return None
-
-    if not VAT_NUMBER_EXPRESSIONS[country_code].match(vat_number):
+    elif not any(c.isdigit() for c in vat_number):
+        return False
+    elif country_code not in VAT_NUMBER_EXPRESSIONS:
+        return False
+    elif not VAT_NUMBER_EXPRESSIONS[country_code].match(vat_number):
         return False
 
     return True

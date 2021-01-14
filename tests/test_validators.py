@@ -60,11 +60,6 @@ VAT_NUMBER_FORMAT_CASES = {
         ('1I345678901', False),
         ('II345678901', False),
     ],
-    'GB': [
-        ('123456789', True),
-        ('123456789001', True),
-        ('999999999999999999999999999999999999', False),
-    ],
     'GR': [
         ('012345678', True),
     ],
@@ -136,14 +131,14 @@ VAT_NUMBER_CHECK_CASES = {
              True,
              business_name=u'NV UNILEVER BELGIUM - UNILEVER BELGIQUE - '
              u'UNILEVER BELGIE',
-             business_address=u'HUMANITEITSLAAN 292\n1190 VORST'
+             business_address=u'Industrielaan 9\n1070 Anderlecht'
          )),
     ],
     'DK': [
-        ('33779437', VatNumberCheckResult(
+        ('54562519', VatNumberCheckResult(
             True,
-            business_name=u'ICONFINDER ApS',
-            business_address=u'Bredgade 19E 2 sal\n1260 K\xf8benhavn K'
+            business_name=u'Lego A/S',
+            business_address='Åstvej 1\n7190 Billund'
         )),
         ('99999O99', VatNumberCheckResult(False)),
         ('9999999', VatNumberCheckResult(False)),
@@ -154,7 +149,7 @@ VAT_NUMBER_CHECK_CASES = {
          VatNumberCheckResult(
              True,
              business_name=u'SPLAY CONSULTING LIMITED',
-             business_address=u'22 ADMIRAL PARK ,BALDOYLE ,DUBLIN 13'
+             business_address=u'22 ADMIRAL PARK, BALDOYLE, DUBLIN 13'
          )),
     ],
     'NL': [
@@ -232,8 +227,13 @@ class CheckVatNumberTestCase(TestCase):
         self.assertIsInstance(actual, VatNumberCheckResult)
         self.assertEqual(expected.is_valid, actual.is_valid)
         self.assertEqual(expected.business_name, actual.business_name)
-        self.assertEqual(expected.business_address,
-                         actual.business_address)
+        expected_address = expected.business_address
+        if expected_address:
+            expected_address = expected_address.lower()
+        actual_address = actual.business_address
+        if actual_address:
+            actual_address = actual_address.lower()
+        self.assertEqual(expected_address, actual_address)
 
     def test_no_country_code(self):
         """check_vat_number('..', country_code=None)

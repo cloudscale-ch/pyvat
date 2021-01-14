@@ -18,7 +18,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(20),
         ItemType.generic_broadcasting_service: Decimal(20),
         ItemType.prepaid_broadcasting_service: Decimal(10),
-        ItemType.ebook: Decimal(20),
+        ItemType.ebook: Decimal(10),
         ItemType.enewspaper: Decimal(20),
     },
     'BE': {
@@ -27,7 +27,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(21),
         ItemType.generic_broadcasting_service: Decimal(21),
         ItemType.prepaid_broadcasting_service: Decimal(21),
-        ItemType.ebook: Decimal(21),
+        ItemType.ebook: Decimal(6),
         ItemType.enewspaper: Decimal(21),
     },
     'BG': {
@@ -54,7 +54,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(21),
         ItemType.generic_broadcasting_service: Decimal(21),
         ItemType.prepaid_broadcasting_service: Decimal(21),
-        ItemType.ebook: Decimal(21),
+        ItemType.ebook: Decimal(10),
         ItemType.enewspaper: Decimal(21),
     },
     'DE': {
@@ -63,7 +63,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(19),
         ItemType.generic_broadcasting_service: Decimal(19),
         ItemType.prepaid_broadcasting_service: Decimal(19),
-        ItemType.ebook: Decimal(19),
+        ItemType.ebook: Decimal(7),
         ItemType.enewspaper: Decimal(19),
     },
     'DK': {
@@ -99,7 +99,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(24),
         ItemType.generic_broadcasting_service: Decimal(24),
         ItemType.prepaid_broadcasting_service: Decimal(24),
-        ItemType.ebook: Decimal(24),
+        ItemType.ebook: Decimal(10),
         ItemType.enewspaper: Decimal(24),
     },
     'FR': {
@@ -111,15 +111,6 @@ EXPECTED_VAT_RATES = {
         ItemType.ebook: Decimal('5.5'),
         ItemType.enewspaper: Decimal('2.1'),
     },
-    'GB': {
-        ItemType.generic_physical_good: Decimal(20),
-        ItemType.generic_electronic_service: Decimal(20),
-        ItemType.generic_telecommunications_service: Decimal(20),
-        ItemType.generic_broadcasting_service: Decimal(20),
-        ItemType.prepaid_broadcasting_service: Decimal(20),
-        ItemType.ebook: Decimal(20),
-        ItemType.enewspaper: Decimal(20),
-    },
     'EL': {
         ItemType.generic_physical_good: Decimal(24),
         ItemType.generic_electronic_service: Decimal(24),
@@ -129,13 +120,22 @@ EXPECTED_VAT_RATES = {
         ItemType.ebook: Decimal(24),
         ItemType.enewspaper: Decimal(24),
     },
+    'GR': {  # Synonymous for "EL" -- Greece
+        ItemType.generic_physical_good:              Decimal(24),
+        ItemType.generic_electronic_service:         Decimal(24),
+        ItemType.generic_telecommunications_service: Decimal(24),
+        ItemType.generic_broadcasting_service:       Decimal(24),
+        ItemType.prepaid_broadcasting_service:       Decimal(24),
+        ItemType.ebook:                              Decimal(24),
+        ItemType.enewspaper:                         Decimal(24),
+    },
     'HR': {
         ItemType.generic_physical_good: Decimal(25),
         ItemType.generic_electronic_service: Decimal(25),
         ItemType.generic_telecommunications_service: Decimal(25),
         ItemType.generic_broadcasting_service: Decimal(25),
         ItemType.prepaid_broadcasting_service: Decimal(25),
-        ItemType.ebook: Decimal(25),
+        ItemType.ebook: Decimal(5),
         ItemType.enewspaper: Decimal(25),
     },
     'HU': {
@@ -148,13 +148,13 @@ EXPECTED_VAT_RATES = {
         ItemType.enewspaper: Decimal(27),
     },
     'IE': {
-        ItemType.generic_physical_good: Decimal(23),
-        ItemType.generic_electronic_service: Decimal(23),
-        ItemType.generic_telecommunications_service: Decimal(23),
-        ItemType.generic_broadcasting_service: Decimal(23),
-        ItemType.prepaid_broadcasting_service: Decimal(23),
-        ItemType.ebook: Decimal(23),
-        ItemType.enewspaper: Decimal(23),
+        ItemType.generic_physical_good: Decimal(21),
+        ItemType.generic_electronic_service: Decimal(21),
+        ItemType.generic_telecommunications_service: Decimal(21),
+        ItemType.generic_broadcasting_service: Decimal(21),
+        ItemType.prepaid_broadcasting_service: Decimal(21),
+        ItemType.ebook: Decimal(9),
+        ItemType.enewspaper: Decimal(21),
     },
     'IT': {
         ItemType.generic_physical_good: Decimal(22),
@@ -180,7 +180,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(17),
         ItemType.generic_broadcasting_service: Decimal(3),
         ItemType.prepaid_broadcasting_service: Decimal(3),
-        ItemType.ebook: Decimal(17),
+        ItemType.ebook: Decimal(3),
         ItemType.enewspaper: Decimal(17),
     },
     'LV': {
@@ -198,7 +198,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(18),
         ItemType.generic_broadcasting_service: Decimal(18),
         ItemType.prepaid_broadcasting_service: Decimal(18),
-        ItemType.ebook: Decimal(18),
+        ItemType.ebook: Decimal(5),
         ItemType.enewspaper: Decimal(18),
     },
     'NL': {
@@ -207,7 +207,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(21),
         ItemType.generic_broadcasting_service: Decimal(21),
         ItemType.prepaid_broadcasting_service: Decimal(21),
-        ItemType.ebook: Decimal(21),
+        ItemType.ebook: Decimal(9),
         ItemType.enewspaper: Decimal(21),
     },
     'PL': {
@@ -216,7 +216,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(23),
         ItemType.generic_broadcasting_service: Decimal(8),
         ItemType.prepaid_broadcasting_service: Decimal(8),
-        ItemType.ebook: Decimal(23),
+        ItemType.ebook: Decimal(5),
         ItemType.enewspaper: Decimal(23),
     },
     'PT': {
@@ -225,7 +225,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(23),
         ItemType.generic_broadcasting_service: Decimal(23),
         ItemType.prepaid_broadcasting_service: Decimal(23),
-        ItemType.ebook: Decimal(23),
+        ItemType.ebook: Decimal(6),
         ItemType.enewspaper: Decimal(23),
     },
     'RO': {
@@ -243,7 +243,7 @@ EXPECTED_VAT_RATES = {
         ItemType.generic_telecommunications_service: Decimal(25),
         ItemType.generic_broadcasting_service: Decimal(25),
         ItemType.prepaid_broadcasting_service: Decimal(25),
-        ItemType.ebook: Decimal(25),
+        ItemType.ebook: Decimal(6),
         ItemType.enewspaper: Decimal(25),
     },
     'SI': {
@@ -299,6 +299,7 @@ class GetSaleVatChargeTestCase(TestCase):
                         )
                         self.assertEqual(vat_charge.action,
                                          VatChargeAction.charge)
+
                         self.assertEqual(vat_charge.rate,
                                          EXPECTED_VAT_RATES[seller_cc][it])
                         self.assertEqual(vat_charge.country_code,
